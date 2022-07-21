@@ -1,0 +1,49 @@
+.icon {
+    position: absolute;
+    top: -30px;
+    left: -41px;
+    width: 224px;
+    
+}
+.degreesWrapper {
+    position: absolute;
+    right: 30px;
+    top: 29px;
+    text-align: center;
+    width: 117px;
+    .degrees {
+        font-weight: 800;
+        font-size: 64px;
+        line-height: 50px;
+    }
+    .condition {
+        font-weight: 400;
+        font-size: 12px;
+        margin-top: 12px;
+    }
+}
+
+.info {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    width: calc(100% - 50px);
+    bottom: 20px;
+    width: 200px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.infoItem{
+    text-align: center;
+}
+
+.infoItemIcon{
+    display: block;
+    margin: 0 auto;
+    height: 18px;
+}
+
+.infoItemValue {
+    margin-top: 7px;
+}
