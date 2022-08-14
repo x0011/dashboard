@@ -1,0 +1,29 @@
+.wrapper {
+    list-style-type: none;
+    .item {
+        padding: 15px 15px 15px 25px;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+
+        .itemName {
+            padding-left: 15px;
+            transition: 0.2s;
+        }
+        .itemImg {
+            width: 18px;
+        }
+        // &:not(:last-child) {
+        //     border-bottom: 1px solid #DCDCDC;
+        // }
+        // &:first-child {
+        //     border-top: 1px solid #DCDCDC;
+        // }
+        &:hover {
+            .itemName{
+                padding-left: 25px;
+            }
+        }
+    }
+}

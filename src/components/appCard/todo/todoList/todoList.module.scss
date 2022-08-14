@@ -1,0 +1,96 @@
+.wrapper {
+    list-style-type: none;
+    overflow: auto;
+    &::-webkit-scrollbar {
+        height: 5px;
+        width: 3px;
+      }
+    &::-webkit-scrollbar-track {
+        // background: orange;
+      }
+    &::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.212);
+        border-radius: 50px;
+      }
+    .item{
+        padding: 2px 0px;
+        font-size: 12px;
+        border-bottom: 1px solid #ebebeb;
+        padding-left: 30px;
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        &:last-child{
+            border-bottom: none;
+        }
+        .edit {
+            background: none;
+            border: none;
+            &:hover {
+                .wrapper .item .delItemBtn {
+                    background: black;
+                }
+            }
+        }
+        .delItemBtn{
+            border: none;
+            background: none;
+            width: 31px;
+            height: 31px;
+            padding: 3px;
+            border-radius: 3px;
+            transition: .3s all;
+            cursor: pointer;
+            &:hover {
+                background: #00000014;
+            }
+        }
+        &:hover {
+            &::after {
+                left: 6px;
+                border-color: #000000;
+            }
+            &::before {
+                transform: translateX(-100%);
+                border-color: rgba(0, 0, 0, 0);
+            }
+        }
+    }
+    .itemComplete{
+        &::before {
+            content: '';
+            display: block;
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            border: 1px solid #464646;
+            border-radius: 3px;
+            left: 0px;
+            transition: .2s;
+        }
+        &::after {
+            content: '';
+            position: absolute;
+            border-color: #00000000;
+            border-style: solid;
+            border-width: 0 2px 2px 0;
+            height: 9px;
+            top: 12px;
+            left: -100%;
+            transform: rotate(45deg);
+            width: 4px;
+            transition: .2s;
+        }
+    }
+}
+
+// .delItemBtn{
+//     background: none;
+//     border: none;
+//     &:hover {
+//         .edit {
+//             font-size: 5px;
+//         }
+//     }
+// }

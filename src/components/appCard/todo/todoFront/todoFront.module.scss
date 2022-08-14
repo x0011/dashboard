@@ -1,0 +1,33 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .editBtn {
+        width: 20px;
+        height: 20px;
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+    .title{
+        font-size: 23px;
+    }
+}
+
+.list {
+    margin-top: 10px;
+    height: 75%;
+    overflow: auto;
+    &::-webkit-scrollbar {
+        height: 5px;
+        width: 3px;
+        margin-left: 10px;
+      }
+    &::-webkit-scrollbar-track {
+        // background: orange;
+      }
+    &::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.127);
+        border-radius: 50px;
+      }
+}

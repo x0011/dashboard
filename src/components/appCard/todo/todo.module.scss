@@ -1,0 +1,12 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .editBtn {
+        width: 20px;
+        height: 20px;
+    }
+    .title{
+        font-size: 23px;
+    }
+}
