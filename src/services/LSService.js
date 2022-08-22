@@ -8,6 +8,14 @@ export default class LSService {
     this.initLS();
   }
 
+  getLS() {
+    return JSON.parse(this.LS.getItem(this.name));
+  }
+
+  setLS(newLS) {
+    localStorage.setItem(this.name, JSON.stringify(newLS));
+  }
+
   initLS() {
     if (this.checkLS() === null) {
       this.LS.setItem(this.name, JSON.stringify({ data: [] }));
@@ -17,11 +25,6 @@ export default class LSService {
   // Проверяет наличие хранилища this.name
   checkLS() {
     return this.LS.getItem(this.name);
-  }
-
-  // Дописать проверку для объекта
-  isEmpty(data) {
-    return data.length === 0;
   }
 
   genKey() {
@@ -43,6 +46,28 @@ export default class LSService {
       LS.data.push(value);
       this.LS.setItem(this.name, JSON.stringify(LS));
     }
+  }
+
+  // Добавляет объект в data
+  addCustomItem(obj) {
+    const LS = JSON.parse(this.checkLS());
+    if (LS !== null) {
+      const newValue = { ...obj };
+      LS.data.push(newValue);
+      this.LS.setItem(this.name, JSON.stringify(LS));
+    } else {
+      this.initLS();
+      LS.data.push({ ...obj });
+      this.LS.setItem(this.name, JSON.stringify(LS));
+    }
+  }
+
+  edit(item, { ...newValues }) {
+    const LS = JSON.parse(this.checkLS());
+    const findElem = this.getItem(item);
+    // if (findElem !== null) {
+    //   findElem.
+    // }
   }
 
   editItem(itemKey, value) {

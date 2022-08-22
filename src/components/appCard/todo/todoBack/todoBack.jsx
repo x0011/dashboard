@@ -47,7 +47,7 @@ class TodoBack extends React.Component {
       <>
         <div className={Styles.wrapper}>
           <form className={Styles.form} onSubmit={this.onSubmit}>
-            <button className={Styles.editBtn} type="button" href="#" onClick={showSettings} onKeyUp={showSettings} label="Закрыть" />
+            <button className={Styles.closeBtn} type="button" href="#" onClick={showSettings} onKeyUp={showSettings} label="Закрыть" />
             <input className={Styles.input} type="text" onChange={this.onChange} placeholder="Новая задача" />
             <button type="submit" aria-label="Добавить" className={Styles.addBtn} />
           </form>

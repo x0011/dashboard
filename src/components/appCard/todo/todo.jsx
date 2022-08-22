@@ -37,7 +37,10 @@ export default class Todo extends React.Component {
   };
 
   addItem = (title) => {
-    this.LS.addItem(title);
+    this.LS.addCustomItem({
+      title,
+      key: this.LS.genKey(),
+    });
     this.update();
   };
 

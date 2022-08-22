@@ -1,26 +1,32 @@
+@import '../../styles/variables';
 .icon {
-    position: absolute;
-    top: -30px;
-    left: -41px;
-    width: 224px;
-    
+    // width: 124px;
+    height: 94px;
 }
+
+.title {
+    font-size: $widget-title-fz;
+}
+
 .degreesWrapper {
-    position: absolute;
-    right: 30px;
-    top: 29px;
     text-align: center;
-    width: 117px;
+    margin-left: 15px;
     .degrees {
-        font-weight: 800;
-        font-size: 64px;
-        line-height: 50px;
+        font-weight: 500;
+        font-size: 54px;
+        line-height: 45px;
     }
     .condition {
         font-weight: 400;
         font-size: 12px;
         margin-top: 12px;
     }
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .info {
@@ -41,7 +47,7 @@
 .infoItemIcon{
     display: block;
     margin: 0 auto;
-    height: 18px;
+    height: 14px;
 }
 
 .infoItemValue {

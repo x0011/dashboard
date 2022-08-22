@@ -1,21 +1,13 @@
 import React from 'react';
 import AppCard from '../appCard';
-import Styles from './quotes.module.scss';
-// Images
-import IMG_refresh from '../../../assets/img/settings/refresh.svg';
-import IMG_settings from '../../../assets/img/settings/settings-widget.svg';
+import QuotesFront from './quotesFront/quotesFront';
+import QuoteSettings from './quoteSettings/quotesSettings';
+import Spinner from '../../spinner/spinner';
+import LSSettings from '../../../services/LSSettings';
 
-async function getData() {
+async function getData(ownerId) {
   const req = JSON.stringify({
-    query: `
-          {
-              getAllQuotes{
-                  quote
-              }
-          }
-      `,
-    variables: {
-    },
+    query: `query{getOwnerWithQuotes(owner_id: "${ownerId}"){owner{name}quotes{quote}}}`,
   });
 
   const response = await fetch('http://194.58.98.84/', {
@@ -23,67 +15,94 @@ async function getData() {
     headers: {
       'Content-type': 'application/json',
     },
-    mode: 'no-cors',
     body: req,
   });
 
   return response.json();
 }
 
-function QuoteHeader({ showSettings }) {
-  return (
-    <div className={Styles.header}>
-      <h2 className={Styles.title}>Цитаты</h2>
-      <div className={Styles.menubar}>
-        <button className={Styles.button} type="button">
-          <img src={IMG_refresh} alt="Обновить цитату" />
-        </button>
-        <button onClick={showSettings} className={Styles.button} type="button">
-          <img src={IMG_settings} alt="Настройки" />
-        </button>
-      </div>
-    </div>
-  );
-}
-
-function Quote() {
-  return (
-    <>
-      <span className={Styles.text}>
-        « Использовать Docker — всё равно, что стрелять из пушки по воробьям! »
-      </span>
-      <span className={Styles.owner}>
-        Александр Утегенов
-      </span>
-    </>
-  );
-}
-
-function QuoteFront({ showSettings }) {
-  return (
-    <div className={Styles.wrapper}>
-      <QuoteHeader showSettings={showSettings} />
-      <Quote />
-    </div>
-  );
-}
-
 export default class Quotes extends React.Component {
+  defaultSettings = {
+    owner: 1,
+    timer: false,
+    allQuotes: false,
+  };
+
+  settingsLS = new LSSettings('quotes', this.defaultSettings);
+
   constructor() {
     super();
     this.state = {
       data: null,
+      allOwners: null,
       showSettings: false,
+      status: false,
+      timerId: false,
+      settings: null,
     };
   }
 
   componentDidMount() {
-    getData().then((data) => {
-      this.setState({
-        data,
-      });
-    });
+    this.update();
   }
+
+  componentWillUnmount() {
+    const { timerId } = this.state;
+    clearInterval(timerId);
+  }
+
+  async getSettings() {
+    return this.settingsLS.getSettings();
+  }
+
+  async getAllOwners() {
+    const query = JSON.stringify({
+      query: '{getAllOwners{id name}}',
+    });
+
+    const result = await fetch('http://194.58.98.84/', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: query,
+    });
+
+    return result.json();
+  }
+
+  setSettings = (settings) => {
+    this.settingsLS.set(settings);
+    this.update();
+  };
+
+  setTimer = (value) => {
+    const { settings, timerId: currentTimer } = this.state;
+    if (settings !== null && settings.timer !== value) {
+      const newTimerId = setInterval(() => {
+        this.update();
+      }, value * 1000);
+      this.setState({ timerId: newTimerId });
+      clearInterval(currentTimer);
+    } else if (settings === null) {
+      const newTimerId = setInterval(() => {
+        this.update();
+      }, value * 1000);
+      this.setState({ timerId: newTimerId });
+    } else if (value === 'false') {
+      clearInterval(currentTimer);
+    }
+  };
+
+  showRandom = () => {
+    const { data, data: { owner } } = this.state;
+    const { length } = data.quotes;
+    const randomQuote = Math.floor(Math.random() * (length - 0)) + 0;
+    return {
+      owner: owner.name,
+      quote: data.quotes[randomQuote].quote,
+    };
+  };
 
   showSettings = () => {
     const { showSettings } = this.state;
@@ -92,14 +111,52 @@ export default class Quotes extends React.Component {
     });
   };
 
+  update = () => {
+    this.getSettings().then((settings) => {
+      const { owner, timer } = settings;
+      this.setTimer(timer);
+      Promise.all([getData(owner), this.getAllOwners()]).then((value) => {
+        const data = value[0].data.getOwnerWithQuotes;
+        const allOwners = value[1].data.getAllOwners;
+        this.setState({
+          data,
+          status: true,
+          allOwners,
+          settings,
+        });
+      });
+    });
+  };
+
   render() {
-    const { showSettings } = this.state;
+    const {
+      showSettings, data, status, settings, allOwners,
+    } = this.state;
     return (
-      <AppCard
-        front={<QuoteFront showSettings={this.showSettings} />}
-        back={(<button type="button" onClick={this.showSettings}>Бекенд</button>)}
-        showSettings={showSettings}
-      />
+      status
+        ? (
+          <AppCard
+            front={(
+              <QuotesFront
+                update={this.update}
+                showRandom={this.showRandom}
+                showSettings={this.showSettings}
+                setupOwner={this.setupOwner}
+                setSettings={this.setSettings}
+              />
+            )}
+            back={(
+              <QuoteSettings
+                showSettings={this.showSettings}
+                setSettings={this.setSettings}
+                settings={settings}
+                allOwners={allOwners}
+              />
+            )}
+            showSettings={showSettings}
+          />
+        )
+        : <AppCard front={<Spinner />} />
     );
   }
 }

@@ -1,0 +1,29 @@
+@mixin closeBtn {
+    position: relative;
+        width: 26px;
+        height: 26px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &::after {
+            content: '';
+            display: block;
+            width: 2px;
+            height: 15px;
+            background: black;
+            position: absolute;
+            transform: rotate(45deg);
+        }
+        &::before {
+            content: '';
+            display: block;
+            width: 2px;
+            height: 15px;
+            background: black;
+            position: absolute;
+            transform: rotate(-45deg);
+        }
+}

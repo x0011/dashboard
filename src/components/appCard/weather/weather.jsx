@@ -2,7 +2,7 @@ import React from 'react';
 import Styles from './weather.module.scss';
 import Spinner from '../../spinner/spinner';
 // assets
-import cloudyIcon from '../../../assets/img/weather/cloudy.svg';
+import weatherIcons from './weatherIcons';
 import windIcon from '../../../assets/img/weather/wind.svg';
 import pressureIcon from '../../../assets/img/weather/pressure.svg';
 import humidityIcon from '../../../assets/img/weather/humidity.svg';
@@ -32,7 +32,7 @@ export default class Weather extends React.Component {
     data.then((result) => {
       const {
         // eslint-disable-next-line camelcase
-        temp_c, humidity, wind_kph, condition: { text }, pressure_mb,
+        temp_c, humidity, wind_kph, condition: { text, code }, pressure_mb,
       } = result.current;
       this.setState({
         // eslint-disable-next-line react/no-unused-state
@@ -42,6 +42,7 @@ export default class Weather extends React.Component {
           wind: service.toMetersPerSecond(wind_kph),
           pressure: service.toMmHg(pressure_mb),
           humidity,
+          code,
         },
         loaded: true,
       });
@@ -52,24 +53,29 @@ export default class Weather extends React.Component {
     const { loaded, weatherInfo } = this.state;
     const { night } = this.props;
     return (
-      loaded ? <AppCard front={<Content data={weatherInfo} />} /> : <Spinner />
+      loaded ? <AppCard front={<Content data={weatherInfo} />} /> : <AppCard front={<Spinner />} />
     );
   }
 }
 
 function Content({ data }) {
   const {
-    degrees, humidity, wind, pressure, condition,
+    degrees, humidity, wind, pressure, condition, code,
   } = data;
   return (
     <>
-      <img className={Styles.icon} src={cloudyIcon} alt={condition} />
-      <div className={Styles.degreesWrapper}>
-        <div className={Styles.degrees}>
-          {degrees}
-          &deg;
+      <div className={Styles.title}>В Самаре</div>
+      <div className={Styles.header}>
+        <div className={Styles.icon_Wrapper}>
+          <img className={Styles.icon} src={weatherIcons[code]} alt={condition} />
         </div>
-        <div className={Styles.condition}>{condition}</div>
+        <div className={Styles.degreesWrapper}>
+          <div className={Styles.degrees}>
+            {degrees}
+            &deg;
+          </div>
+          <div className={Styles.condition}>{condition}</div>
+        </div>
       </div>
       <div className={Styles.info}>
         <div className="infoItem">

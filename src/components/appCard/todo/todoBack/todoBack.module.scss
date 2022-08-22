@@ -1,3 +1,4 @@
+@import '../../../styles/mixins.scss';
 .header {
     display: flex;
     justify-content: space-between;
@@ -38,6 +39,8 @@
     }
     .form {
         display: flex;
+        align-items: center;
+        justify-content: center;
         position: relative;
         .addBtn {
             width: 25px;
@@ -98,36 +101,9 @@
       }
 }
 
-.editBtn {
-    background: none;
-    border: none;
+.closeBtn {
+    @include closeBtn;
     margin-right: 10px;
-    width: 25px;
-    cursor: pointer;
-    position: relative;
-    &::after{
-        content: '';
-        display: block;
-        width: 2px;
-        height: 13px;
-        top: 10px;
-        left: 0;
-        border-radius: 5px;
-        background: black;
-        position: absolute;
-        transform: rotate(45deg);
-    }
-    &::before {
-        content: '';
-        display: block;
-        width: 2px;
-        height: 13px;
-        top: 10px;
-        border-radius: 5px;
-        background: black;
-        position: absolute;
-        transform: rotate(-45deg);
-    }
  }
 
 

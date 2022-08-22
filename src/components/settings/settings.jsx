@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Styles from './settings.module.scss';
@@ -14,9 +15,18 @@ function Settings(props) {
             <img src={AvatarIMG} alt="" />
             <span className={Styles.myName}>Ярослав</span>
           </div>
-          <SettingsList />
         </div>
-        <div className={Styles.rightCol} />
+        <div className={Styles.rightCol}>
+          <label className={Styles.label}>
+            Имя:
+            <input />
+          </label>
+          <br />
+          <label className={Styles.label}>
+            Аватар:
+            <input type="file" />
+          </label>
+        </div>
       </div>
       <button type="button" onClick={() => history(-1)} className={Styles.goBack}>Вернуться назад</button>
     </>

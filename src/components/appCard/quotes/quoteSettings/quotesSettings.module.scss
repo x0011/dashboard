@@ -1,0 +1,30 @@
+@import '../../../styles/mixins.scss';
+@import '../../../styles/variables.scss';
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .close {
+        @include closeBtn;
+    }
+    .title {
+        font-size: $widget-title-fz;
+    }
+}
+
+.selectOwner {
+    padding: 5px;
+    width: 100%;
+    font-size: 12px;
+    border-radius: 7px;
+}
+
+.label {
+    font-size: 15px;
+    margin-top: 5px;
+}
+
+.wrapper {
+    margin-top: 15px;
+}

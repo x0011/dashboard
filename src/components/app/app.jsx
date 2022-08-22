@@ -4,12 +4,21 @@ import Header from '../header/header';
 import Date from '../date/dateView';
 import AppsGrid from '../appsGrid/appsGrid';
 import Settings from '../settings/settings';
+import Styles from './app.module.scss';
 
 export default class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      background: './../../assets/img/bg.jpg',
+    };
+  }
+
   render() {
+    const { background } = this.state;
     return (
       <BrowserRouter>
-        <div className="app">
+        <div className={Styles.app}>
           <Header />
           <Date />
           <Routes>

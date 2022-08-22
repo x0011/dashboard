@@ -18,17 +18,10 @@ import IMG_todo from '../../../assets/img/settings/todo-list.svg';
 
 export default class SettingsList extends React.Component {
   settings = [
-    // eslint-disable-next-line camelcase
-    { name: 'Виджеты', img: IMG_widgets },
-    // eslint-disable-next-line camelcase
     { name: 'Погода', img: IMG_weather },
-    // eslint-disable-next-line camelcase
     { name: 'Курс валют', img: IMG_stonks },
-    // eslint-disable-next-line camelcase
     { name: 'Цитаты', img: IMG_quotes },
-    // eslint-disable-next-line camelcase
     { name: 'Todo', img: IMG_todo },
-    // eslint-disable-next-line camelcase
     { name: 'Основные', img: IMG_settings },
   ];
 
