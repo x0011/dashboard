@@ -50,15 +50,18 @@ export default class QuotesSettings extends React.Component {
               {this.createOwners()}
             </select>
           </label>
-          <label className={Styles.label}>
+          {/* <label className={Styles.label}>
             Установить таймер:
-            <select onChange={(event) => this.changeSettings(event, 'timer')} className={Styles.selectOwner}>
+            <select
+              onChange={(event) => this.changeSettings(event, 'timer')}
+              className={Styles.selectOwner}
+            >
               <option value="false">Без таймера</option>
               <option value="5">5 сек</option>
               <option value="15">15 сек</option>
               <option value="60">1 мин</option>
             </select>
-          </label>
+          </label> */}
         </div>
       </>
     );

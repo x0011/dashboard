@@ -7,7 +7,7 @@ export default class Header extends React.Component {
     return (
       <div className={Styles.wrapper}>
         <div className={Styles.owner}>Ярослав Пантелеев</div>
-        <Link to="/settings/">Настройки</Link>
+        {/* <Link to="/settings/">Настройки</Link> */}
       </div>
     );
   }

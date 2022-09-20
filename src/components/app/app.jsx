@@ -15,18 +15,25 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { background } = this.state;
     return (
-      <BrowserRouter>
-        <div className={Styles.app}>
-          <Header />
-          <Date />
-          <Routes>
-            <Route path="/" element={<AppsGrid />} />
-            <Route path="/settings/" element={<Settings />} />
-          </Routes>
-        </div>
-      </BrowserRouter>
+      <div className={Styles.app}>
+        <Header />
+        <Date />
+        <AppsGrid />
+      </div>
     );
   }
 }
+
+// return (
+//   <BrowserRouter>
+//     <div className={Styles.app}>
+//       <Header />
+//       <Date />
+//       <Routes>
+//         <Route path="/" element={<AppsGrid />} />
+//         <Route path="/settings/" element={<Settings />} />
+//       </Routes>
+//     </div>
+//   </BrowserRouter>
+// );

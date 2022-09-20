@@ -13,7 +13,7 @@ export default class AppsGrid extends React.Component {
 
   render() {
     return (
-      <Container>
+      <Container className={Styles.cont}>
         <div className={Styles.wrapper}>
           <Weather />
           <Todo />

@@ -13,20 +13,21 @@
     margin-left: 15px;
     .degrees {
         font-weight: 500;
-        font-size: 54px;
-        line-height: 45px;
+        font-size: 42px;
+        line-height: 32px;
     }
     .condition {
         font-weight: 400;
         font-size: 12px;
         margin-top: 12px;
+        line-height: 13px;
     }
 }
 
 .header {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-around;
+    margin-top: 15px;
 }
 
 .info {

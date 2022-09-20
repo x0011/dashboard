@@ -2,7 +2,7 @@ export default class WeatherService {
   apiBase = {
     apiKey: '9bcf77a8143149da977212413221907',
     current: '/current.json',
-    url: 'http://api.weatherapi.com/v1',
+    url: 'https://api.weatherapi.com/v1',
   };
 
   async check(city) {

@@ -10,7 +10,7 @@ async function getData(ownerId) {
     query: `query{getOwnerWithQuotes(owner_id: "${ownerId}"){owner{name}quotes{quote}}}`,
   });
 
-  const response = await fetch('http://194.58.98.84/', {
+  const response = await fetch('https://panteleev.su/graphql', {
     method: 'POST',
     headers: {
       'Content-type': 'application/json',
@@ -34,6 +34,7 @@ export default class Quotes extends React.Component {
     super();
     this.state = {
       data: null,
+      currentQuote: 0,
       allOwners: null,
       showSettings: false,
       status: false,
@@ -47,8 +48,8 @@ export default class Quotes extends React.Component {
   }
 
   componentWillUnmount() {
-    const { timerId } = this.state;
-    clearInterval(timerId);
+    // const { timerId } = this.state;
+    // clearInterval(timerId);
   }
 
   async getSettings() {
@@ -60,7 +61,7 @@ export default class Quotes extends React.Component {
       query: '{getAllOwners{id name}}',
     });
 
-    const result = await fetch('http://194.58.98.84/', {
+    const result = await fetch('https://panteleev.su/graphql', {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
@@ -77,31 +78,30 @@ export default class Quotes extends React.Component {
   };
 
   setTimer = (value) => {
-    const { settings, timerId: currentTimer } = this.state;
-    if (settings !== null && settings.timer !== value) {
-      const newTimerId = setInterval(() => {
-        this.update();
-      }, value * 1000);
-      this.setState({ timerId: newTimerId });
-      clearInterval(currentTimer);
-    } else if (settings === null) {
-      const newTimerId = setInterval(() => {
-        this.update();
-      }, value * 1000);
-      this.setState({ timerId: newTimerId });
-    } else if (value === 'false') {
-      clearInterval(currentTimer);
-    }
+    // const { settings, timerId: currentTimer } = this.state;
+    // if (settings !== null && settings.timer !== value) {
+    //   const newTimerId = setInterval(() => {
+    //     this.update();
+    //   }, value * 1000);
+    //   this.setState({ timerId: newTimerId });
+    //   clearInterval(currentTimer);
+    // } else if (settings === null) {
+    //   const newTimerId = setInterval(() => {
+    //     this.update();
+    //   }, value * 1000);
+    //   this.setState({ timerId: newTimerId });
+    // } else if (value === 'false') {
+    //   clearInterval(currentTimer);
+    // }
   };
 
-  showRandom = () => {
+  setRandom = () => {
     const { data, data: { owner } } = this.state;
     const { length } = data.quotes;
     const randomQuote = Math.floor(Math.random() * (length - 0)) + 0;
-    return {
-      owner: owner.name,
-      quote: data.quotes[randomQuote].quote,
-    };
+    this.setState({
+      currentQuote: randomQuote,
+    });
   };
 
   showSettings = () => {
@@ -125,13 +125,16 @@ export default class Quotes extends React.Component {
           settings,
         });
       });
+    }).catch((err) => {
+      console.log(err.message);
     });
   };
 
   render() {
     const {
-      showSettings, data, status, settings, allOwners,
+      showSettings, data, currentQuote, status, settings, allOwners,
     } = this.state;
+    // console.log(data);
     return (
       status
         ? (
@@ -139,10 +142,12 @@ export default class Quotes extends React.Component {
             front={(
               <QuotesFront
                 update={this.update}
-                showRandom={this.showRandom}
+                setRandom={this.setRandom}
                 showSettings={this.showSettings}
                 setupOwner={this.setupOwner}
                 setSettings={this.setSettings}
+                currentQuote={currentQuote}
+                data={data}
               />
             )}
             back={(

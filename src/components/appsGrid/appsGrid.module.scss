@@ -1,6 +1,33 @@
 .wrapper {
     display: grid;
-    grid-template: repeat(1, 220px) / repeat(3, 300px);
+    grid-template: repeat(1, 220px)/repeat(auto-fit, minmax(258px, 1fr));
+    grid-auto-rows: 220px;
     gap: 30px;
     margin-top: 30px;
+}
+.cont {
+    padding: 0px 25% 0px 25%;
+}
+
+@media (min-width: 0px) and (max-width: 319px) {
+    .wrapper {
+        grid-template: repeat(1, 220px)/  1fr;
+        grid-auto-rows: 220px;
+    }
+}
+// @media (min-width: 320px) and (max-width: 575px) {
+//     .container {
+//         width: 100%;
+//         padding: 0px 10%;
+//     }
+// }
+@media (min-width: 992px) and (max-width: 12199px) {
+    .wrapper {
+        grid-template: repeat(1, 220px)/repeat(auto-fit, minmax(280px, 1fr));
+    }
+}
+@media (min-width: 1199px) and (max-width: 1400px) {
+    .wrapper {
+        grid-template: repeat(1, 220px)/repeat(auto-fit, minmax(258px, 1fr));
+    }
 }
